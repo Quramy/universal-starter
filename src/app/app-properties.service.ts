@@ -12,7 +12,7 @@ export interface AppProperties {
 export class AppPropertiesService {
   constructor (private http: Http) {}
 
-  private _appPropertiesUrl = 'api/app';
+  private _appPropertiesUrl = 'http://localhost:3000/api/app';
 
   getAppPropertiesApi() {
     return this.http.get(this._appPropertiesUrl)
