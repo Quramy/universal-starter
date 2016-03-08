@@ -3,12 +3,13 @@ import * as express from 'express';
 
 // Angular 2
 import 'angular2-universal-preview/polyfills';
-import {expressEngine, REQUEST_URL, NODE_LOCATION_PROVIDERS} from 'angular2-universal-preview';
+import {expressEngine, REQUEST_URL, NODE_LOCATION_PROVIDERS, NODE_HTTP_PROVIDERS} from 'angular2-universal-preview';
 import {provide, enableProdMode} from 'angular2/core';
 import {APP_BASE_HREF, ROUTER_PROVIDERS} from 'angular2/router';
 // Application
 import {App} from './app/app';
 import {Title, ServerOnlyApp} from './server-only-app/server-only-app';
+import {AppProperties} from './app/app-properties.service';
 
 let app = express();
 let root = path.join(path.resolve(__dirname, '..'));
@@ -31,10 +32,20 @@ function ngApp(req, res) {
       provide(REQUEST_URL, {useValue: url}),
       ROUTER_PROVIDERS,
       NODE_LOCATION_PROVIDERS,
+      NODE_HTTP_PROVIDERS
     ],
-    preboot: true
+    preboot: true,
+    server: true
   });
 }
+
+app.get('/api/app', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  const appProperties: AppProperties = {
+    name: 'Angular 2 (API)'
+  };
+  res.send(JSON.stringify(appProperties));
+});
 
 // Serve static files
 app.use(express.static(root));

@@ -1,6 +1,10 @@
 import {Component, Directive, ElementRef, Renderer} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
+import {Observable} from 'rxjs/Observable';
+
+
+import {AppProperties, AppPropertiesService} from './app-properties.service';
 
 @Directive({
   selector: '[x-large]'
@@ -39,6 +43,9 @@ export class About {
     ...ROUTER_DIRECTIVES,
     XLarge
   ],
+  providers: [
+    AppPropertiesService
+  ],
   styles: [`
     .router-link-active {
       background-color: lightgray;
@@ -68,7 +75,22 @@ export class About {
   { path: '/**', redirectTo: ['Home'] }
 ])
 export class App {
-  name: string = 'Angular 2';
+
+  constructor (private _appPropertiesService: AppPropertiesService) {}
+
+  ngOnInit() {
+    this.getAppPropertiesApi();
+  }
+
+  name: string;
+  errorMessage: string;
+
+  getAppPropertiesApi() {
+    this._appPropertiesService.getAppPropertiesApi()
+        .subscribe(
+          appProperties => this.name = appProperties.name,
+          error =>  this.errorMessage = <any>error);
+  }
 }
 
 

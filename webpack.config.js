@@ -23,7 +23,8 @@ var clientConfig = {
   entry: './src/client',
   output: {
     path: path.join(__dirname, 'dist', 'client')
-  }
+  },
+  devtool: 'source-map'
 };
 
 
