@@ -32,7 +32,8 @@ function ngApp(req, res) {
       provide(REQUEST_URL, {useValue: url}),
       ROUTER_PROVIDERS,
       NODE_LOCATION_PROVIDERS,
-      NODE_HTTP_PROVIDERS
+      NODE_HTTP_PROVIDERS,
+      provide('IS_SERVER_RENDER', {useValue: true})
     ],
     preboot: true,
     server: true

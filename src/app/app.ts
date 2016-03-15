@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Renderer} from 'angular2/core';
+import {Component, Directive, ElementRef, Renderer, Inject} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {Observable} from 'rxjs/Observable';
@@ -76,7 +76,15 @@ export class About {
 ])
 export class App {
 
-  constructor (private _appPropertiesService: AppPropertiesService) {}
+  constructor (@Inject('IS_SERVER_RENDER') private _isServerRender: boolean, private _appPropertiesService: AppPropertiesService) {
+
+
+    if(this._isServerRender) {
+      console.log("create App SERVER");
+    } else {
+      console.log("create App CLIENT");
+    }
+  }
 
   ngOnInit() {
     this.getAppPropertiesApi();
@@ -86,6 +94,7 @@ export class App {
   errorMessage: string;
 
   getAppPropertiesApi() {
+    this.name = "test";
     this._appPropertiesService.getAppPropertiesApi()
         .subscribe(
           appProperties => this.name = appProperties.name,
