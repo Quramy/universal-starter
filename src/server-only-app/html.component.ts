@@ -15,7 +15,7 @@ export class ServerOnlyApp {
 }
 
 @Component({
-  selector: 'html',
+  selector: 'html-body',
   directives: [
     App,
     ServerOnlyApp
@@ -24,19 +24,6 @@ export class ServerOnlyApp {
 
   ],
   template: `
-  <head>
-    <title>{{ seo.title }}</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="Angular 2 Universal">
-    <meta name="keywords" content="Angular 2,Universal">
-    <meta name="author" content="PatrickJS">
-
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-
-    <base [attr.href]="seo.baseUrl">
-  </head>
-  <body>
-
     <app>
       Loading...
     </app>
@@ -44,9 +31,6 @@ export class ServerOnlyApp {
     <server-only-app>
       Loading...
     </server-only-app>
-
-    <script async [attr.src]="scriptUrl"></script>
-  </body>
   `
 })
 @RouteConfig([
@@ -55,10 +39,29 @@ export class ServerOnlyApp {
   { path: '/about', component: About, name: 'About' },
   { path: '/**', redirectTo: ['Home'] }
 ])
-export class Html {
+export class HtmlBody {
+
+}
+
+@Component({
+  selector: 'html-head',
+  directives: [ ],
+  providers: [ ],
+  template: `
+    <title>{{ seo.title }}</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Angular 2 Universal">
+    <meta name="keywords" content="Angular 2,Universal">
+    <meta name="author" content="PatrickJS">
+
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <base [attr.href] = "seo.baseUrl">
+  `
+})
+export class HtmlHead {
   seo = {
     baseUrl: '/',
-    src: '/dist/client/bundle.js',
     title: 'Angular 2 Universal Starter - this component replaces the title element'
   };
 }
