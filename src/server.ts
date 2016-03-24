@@ -29,7 +29,7 @@ app.set('views', __dirname);
 app.set('view engine', 'html');
 
 
-function ngApp(req, res) {
+function ngApp(req: express.Request, res) {
   let baseUrl = '/';
   let url = req.originalUrl || '/';
   res.render('index', {
@@ -42,7 +42,11 @@ function ngApp(req, res) {
       NODE_PRELOAD_CACHE_HTTP_PROVIDERS,
     ],
     async: false,
-    preboot: false
+    preboot: !!req.query['preboot'] && {
+      appRoot: 'app',
+      uglify: false,
+      debug: true
+    }
   });
 }
 

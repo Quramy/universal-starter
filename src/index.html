@@ -3,7 +3,22 @@
   <head>
     <html-head></html-head>
   </head>
+  <style>
+.indicate {
+  width: 100%;
+  height: 40px;
+}
+.indicate:before {
+  color: red;
+  content: 'before client bootstrap';
+}
+.indicate.done:before {
+  color: green;
+  content: 'bootstrap done';
+}
+  </style>
   <body>
+    <div class="indicate"></div>
     <html-body></html-body>
     <script async src="/dist/client/bundle.js"></script>
   </body>

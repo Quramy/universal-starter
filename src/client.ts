@@ -6,7 +6,11 @@ import {ROUTER_PROVIDERS} from 'angular2/router';
 
 import {App} from './app/app.component';
 
-bootstrap(App, [
-  ...ROUTER_PROVIDERS
-])
-.then(prebootComplete);
+setTimeout(() => {
+    bootstrap(App, [
+        ...ROUTER_PROVIDERS
+    ]).then(() => {
+        document.querySelector('.indicate').classList.add('done');
+        prebootComplete();
+    });
+}, 2000);
