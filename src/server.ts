@@ -41,7 +41,8 @@ function ngApp(req: express.Request, res) {
       NODE_LOCATION_PROVIDERS,
       NODE_PRELOAD_CACHE_HTTP_PROVIDERS,
     ],
-    async: false,
+    precache: true,
+    //async: true,
     preboot: !!req.query['preboot'] && {
       appRoot: 'app',
       uglify: false,
@@ -52,6 +53,13 @@ function ngApp(req: express.Request, res) {
 
 // Serve static files
 app.use(express.static(root, {index: false}));
+
+let router = express.Router();
+router.get('/message', (req, res) => {
+    res.send('XHR message!');
+});
+
+app.use('/api/v1', router);
 
 // Routes with html5pushstate
 app.use('/', ngApp);
