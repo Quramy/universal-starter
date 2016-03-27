@@ -39,7 +39,6 @@ export class About implements OnActivate {
     routerOnActivate() {
       return this.http.get('http://localhost:3000/api/v1/message').subscribe(res => {
         this.xhrMessage = res.text();
-        console.log('got it!', this.xhrMessage);
       });
     }
 }
