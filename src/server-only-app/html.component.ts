@@ -1,9 +1,6 @@
 import {Component} from 'angular2/core';
 import {RouteConfig} from 'angular2/router';
 
-// Require our Universal App
-import {App, Home, About} from '../app/app.component';
-
 @Component({
   selector: 'server-only-app',
   template: `
@@ -12,35 +9,6 @@ import {App, Home, About} from '../app/app.component';
 })
 export class ServerOnlyApp {
   seo = 'Angular 2 Universal - server only rendered component';
-}
-
-@Component({
-  selector: 'html-body',
-  directives: [
-    App,
-    ServerOnlyApp
-  ],
-  providers: [
-
-  ],
-  template: `
-    <app>
-      Loading...
-    </app>
-
-    <server-only-app>
-      Loading...
-    </server-only-app>
-  `
-})
-@RouteConfig([
-  { path: '/', component: Home, name: 'Home', useAsDefault: true },
-  { path: '/home', component: Home, name: 'Home' },
-  { path: '/about', component: About, name: 'About' },
-  { path: '/**', redirectTo: ['Home'] }
-])
-export class HtmlBody {
-
 }
 
 @Component({
