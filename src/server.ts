@@ -42,7 +42,7 @@ function ngApp(req: express.Request, res) {
       NODE_PRELOAD_CACHE_HTTP_PROVIDERS,
     ],
     async: false,
-    preboot: !!req.query['preboot'] && {
+    preboot: req.query['preboot']==='true' && {
       appRoot: 'app',
       uglify: false,
       debug: true
