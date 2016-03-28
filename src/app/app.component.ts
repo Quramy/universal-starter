@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, Renderer} from 'angular2/core';
+import {Component, Directive, ElementRef, Renderer, OnInit} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES, OnActivate} from 'angular2/router';
 import {Http} from 'angular2/http';
 
@@ -31,16 +31,20 @@ export class Home {
   <span>{{xhrMessage}}</span>
   `
 })
-export class About implements OnActivate {
+export class About implements OnInit {
     private xhrMessage: string;
     constructor(private http: Http) {
     }
 
-    routerOnActivate() {
-      return this.http.get('http://localhost:3000/api/v1/message').subscribe(res => {
-        this.xhrMessage = res.text();
-      });
+    ngOnInit() {
+      this.http.get('http://localhost:3000/api/v1/message').subscribe(res => this.xhrMessage = res.text());
     }
+
+    // routerOnActivate() {
+    //   return this.http.get('http://localhost:3000/api/v1/message').subscribe(res => {
+    //       this.xhrMessage = res.text();
+    //   });
+    // }
 }
 
 
