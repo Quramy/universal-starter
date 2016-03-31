@@ -41,8 +41,7 @@ function ngApp(req: express.Request, res) {
       NODE_LOCATION_PROVIDERS,
       NODE_PRELOAD_CACHE_HTTP_PROVIDERS,
     ],
-    precache: true,
-    //async: true,
+    async: true,
     preboot: !!req.query['preboot'] && {
       appRoot: 'app',
       uglify: false,
