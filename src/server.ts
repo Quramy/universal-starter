@@ -1,18 +1,20 @@
+import 'angular2-universal/polyfills';
+
 import * as path from 'path';
 import * as express from 'express';
 
-// Angular 2
-import 'angular2-universal-preview/polyfills';
+// Angular 2 Universal
 import {
+  provide,
+  enableProdMode,
   expressEngine,
   REQUEST_URL,
-  NODE_LOCATION_PROVIDERS,
-  NODE_PRELOAD_CACHE_HTTP_PROVIDERS
-} from 'angular2-universal-preview';
-
-import {provide, enableProdMode} from 'angular2/core';
-
-import {APP_BASE_HREF, ROUTER_PROVIDERS} from 'angular2/router';
+  ORIGIN_URL,
+  BASE_URL,
+  NODE_ROUTER_PROVIDERS,
+  NODE_HTTP_PROVIDERS,
+  ExpressEngineConfig
+} from 'angular2-universal';
 
 // Application
 import {App} from './app/app.component';
@@ -34,19 +36,22 @@ function ngApp(req: express.Request, res) {
   let url = req.originalUrl || '/';
   res.render('index', {
     directives: [ App, HtmlHead, ServerOnlyApp],
+    platformProviders: [
+      provide(ORIGIN_URL, {useValue: 'http://localhost:3000'}),
+      provide(BASE_URL, {useValue: baseUrl}),
+    ],
     providers: [
-      provide(APP_BASE_HREF, {useValue: baseUrl}),
       provide(REQUEST_URL, {useValue: url}),
-      ROUTER_PROVIDERS,
-      NODE_LOCATION_PROVIDERS,
-      NODE_PRELOAD_CACHE_HTTP_PROVIDERS,
+      NODE_ROUTER_PROVIDERS,
+      NODE_HTTP_PROVIDERS,
     ],
     async: true,
-    preboot: !!req.query['preboot'] && {
-      appRoot: 'app',
-      uglify: false,
-      debug: true
-    }
+    preboot: false,
+    // preboot: {
+    //   appRoot: 'app',
+    //   uglify: false,
+    //   debug: true
+    // }
   });
 }
 
